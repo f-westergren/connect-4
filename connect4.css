@@ -29,11 +29,11 @@
   }
 }
 
-.p1 {
+div.p1 {
   background-color: red
 }
 
-.p2 {
+div.p2 {
   background-color: blue;
 }
 
@@ -49,6 +49,10 @@
   border: dashed 1px lightgray;
 }
 
-#column-top td:hover {
-  background-color: gold;
+.p1 td:hover {
+  background-color: red;
+}
+
+.p2 td:hover {
+  background-color: blue;
 }

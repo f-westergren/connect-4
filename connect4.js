@@ -34,7 +34,8 @@ const makeHtmlBoard = () => {
   const htmlBoard = document.getElementById("board")
   // TODO: add comment for this code
   const top = document.createElement("tr"); // Creates the top table row 
-  top.setAttribute("id", "column-top"); // sets id so css can be applied to the top row separately
+  top.setAttribute("id", "column-top");
+  top.setAttribute("class", "p1") // sets id so css can be applied to the top row separately
   top.addEventListener("click", handleClick); // Eventhandler for what happens when you click the top row, the function called is set to handleCLick.
 
   // This creates the cells on the top row. Every cell is given a unique id depending based on where in the grid they are.
@@ -66,6 +67,7 @@ const findSpotForCol = (x) => {
       return i
     }
   }
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -82,6 +84,21 @@ const placeInTable = (y, x) => {
 
 const endGame = (msg) => {
   alert(msg)
+}
+
+const switchPlayer = () => {
+  const top = document.getElementById('column-top')
+  setTimeout(() => {
+  if (currPlayer === 1) {
+    currPlayer = 2
+      top.classList.add('p2')
+      top.classList.remove('p1')  
+  } else {
+    currPlayer = 1
+    top.classList.add('p1')
+    top.classList.remove('p2')
+    }
+  }, 500)
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -110,11 +127,11 @@ const handleClick = (evt) => {
   // TODO: check if all cells in board are filled; if so call, call endGame
   const filledSlots = document.querySelectorAll('div .piece')
   if (filledSlots.length === HEIGHT * WIDTH) {
-    endGame()
+    endGame("It's a tie!")
   } 
 
   // switch players
-  currPlayer === 1 ? currPlayer = 2 : currPlayer = 1
+  switchPlayer()
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
