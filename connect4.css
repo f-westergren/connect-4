@@ -15,35 +15,15 @@
   border-radius: 50%;
 }
 
-.drop {
-  animation-name: fall-animation;
-  animation-duration: 1s;
+.piece.p1 {
+  background-color: red;
 }
 
-@keyframes fall-animation {
-  from {
-      transform: translateY(-350px);
-  }
-  to {
-      transform: translateY(0);
-  }
-}
-
-.p1 {
-  background-color: red
-}
-
-.p2 {
+.piece.p2 {
   background-color: blue;
 }
 
 /* column-top is table row of clickable areas for each column */
-
-#column-top{
-  position: relative;
-  animation-duration: 3s;
-  animation-name: drop;
-}
 
 #column-top td {
   border: dashed 1px lightgray;
