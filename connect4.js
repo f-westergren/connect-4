@@ -1,39 +1,20 @@
-/** Connect Four
- *
- * Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
- * column until a player gets four-in-a-row (horiz, vert, or diag) or until
- * board fills (tie)
- */
-
 const WIDTH = 7;
 const HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
 const board = []; // array of rows, each row is array of cells  (board[y][x])
 
-/** makeBoard: create in-JS board structure:
- *    board = array of rows, each row is array of cells  (board[y][x])
- */
-
 const makeBoard = () => {
-  let rows = []
   for (let i = 0; i<HEIGHT; i++) {
-    for (let i = 0;i<WIDTH; i++) {
-      rows.push(null)
-    }
-    board.push(rows)
-    rows = []
+    board.push(Array.from({length: WIDTH }))
   }
-  // TODO: set "board" to empty HEIGHT x WIDTH matrix array
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
-
 const makeHtmlBoard = () => {
-  // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
   const htmlBoard = document.getElementById("board")
-  // TODO: add comment for this code
   const top = document.createElement("tr"); // Creates the top table row 
+
   top.setAttribute("id", "column-top");
   top.setAttribute("class", "p1") // sets id so css can be applied to the top row separately
   top.addEventListener("click", handleClick); // Eventhandler for what happens when you click the top row, the function called is set to handleCLick.
@@ -59,19 +40,16 @@ const makeHtmlBoard = () => {
 }
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
-
 const findSpotForCol = (x) => {
-  // TODO: write the real version of this, rather than always returning 0
   for (let i = HEIGHT-1;i >= 0;i--) {
     if (!board[i][x]) {
       return i
     }
   }
-  return null;
+  return undefined;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
-
 const placeInTable = (y, x) => {
   const pieceDiv = document.createElement("div")
   pieceDiv.setAttribute('class', `piece p${currPlayer}`)
@@ -81,11 +59,11 @@ const placeInTable = (y, x) => {
 }
 
 /** endGame: announce game end */
-
 const endGame = (msg) => {
   alert(msg)
 }
 
+// switch players
 const switchPlayer = () => {
   const top = document.getElementById('column-top')
   setTimeout(() => {
@@ -102,19 +80,16 @@ const switchPlayer = () => {
 }
 
 /** handleClick: handle click of column top to play piece */
-
 const handleClick = (evt) => {
-  // get x from ID of clicked cell
-  let x = +evt.target.id;
+  let x = +evt.target.id; // get x from ID of clicked cell
 
   // get next spot in column (if none, ignore click)
   let y = findSpotForCol(x);
-  if (y === null) {
+  if (y === undefined) {
     return;
   }
 
   // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
   placeInTable(y, x);
     board[y][x] = currPlayer
 
@@ -130,12 +105,10 @@ const handleClick = (evt) => {
     endGame("It's a tie!")
   } 
 
-  // switch players
   switchPlayer()
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
-
 const checkForWin = () => {
   function _win(cells) {
     // Check four cells to see if they're all color of current player
@@ -151,8 +124,6 @@ const checkForWin = () => {
         board[y][x] === currPlayer // each of the cells in the nested array are the same player
     );
   }
-
-  // TODO: read and understand this code. Add comments to help you.
 
   for (let y = 0; y < HEIGHT; y++) {  // Iterate y-axis, starting from the top
     for (let x = 0; x < WIDTH; x++) { // iterate x-axis on each y-axis, starting from the left
